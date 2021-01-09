@@ -3,7 +3,8 @@ const inquirer =require('inquirer');
 const mysql =require('mysql'); 
 const cTable = require('console.table');
 
-
+//Please note: there will be fewer commits on this project in Github due to having to delete 
+//my previous repo since my root password is a password I use globally
 
 //creates the connection
 var connection = mysql.createConnection({
@@ -96,7 +97,7 @@ var connection = mysql.createConnection({
   }
 
   function allDepartments() {
-    var query = "SELECT * FROM department"
+    var query = "SELECT name FROM department"
   connection.query(query, function(err, res) {
     if (err) throw err;
       console.table(res);
@@ -182,10 +183,31 @@ function addRole (){
 })
 }
 
-// function addDepartment (){
 
-//   start(); 
-// }
+//still need to update
+function addDepartment (){
+
+  inquirer
+  .prompt([
+    {
+    name:"deptName",
+    type: "input",
+    message: "What is name of the department to be added?"
+  }
+])
+.then(function(response){
+  var query = "INSERT INTO department SET ?" 
+  
+  var deptName ={
+    name: response.deptName, 
+  }
+  connection.query(query, deptName, function(err, res) {
+    if (err) throw err;
+      console.table(res);
+    start(); 
+  })  
+})
+}
 
 
 function updateEmployee(){

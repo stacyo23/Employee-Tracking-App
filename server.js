@@ -39,7 +39,7 @@ var connection = mysql.createConnection({
         name: "actions",
         type: "rawlist",
         message: "What would you like to do?",
-        choices: ["View all employees", "View all roles", "View all departments", "Add an employee", "Add a role", "Add a department", "Update employee role", "Exit"]
+        choices: ["View all employees", "View all roles", "View all departments", "Add an employee", "Add a role", "Add a department", "Update employee role", "Delete employee", "Exit"]
       })
       .then(function(answer) {
       switch (answer.actions) {
@@ -70,6 +70,10 @@ var connection = mysql.createConnection({
         case "Update employee role":
           return updateEmployee();
           break;
+
+          case "Delete employee":
+            return deleteEmployee();
+            break;
   
         case "Exit":
           return exitApp();
@@ -184,7 +188,7 @@ function addRole (){
 }
 
 
-//still need to update
+//adds departments to department database
 function addDepartment (){
 
   inquirer
@@ -250,7 +254,50 @@ var query = 'SELECT * from employee'
   
 }
 
-  function exitApp(){
+
+
+function deleteEmployee() {
+  var query = 'SELECT * from employee' 
+  
+  connection.query(query, function(err, res) {
+    if (err) throw err; 
+
+    var choices = res.map(employee => employee.first_name + ' ' + employee.last_name +' ' + employee.id); 
+
+    inquirer
+    .prompt([
+      {
+      name:"name",
+      type: "rawlist",
+      message: "Which employee would you like to remove?",
+      choices: choices
+    }
+  ])
+  .then(function(response) {
+    var employeeChoiceArr = response.name.split(' ');
+    var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
+    var query = "DELETE FROM employee WHERE employee.id=?" 
+
+    // var employee = {
+    //   id: employeeId
+    // }
+
+
+      // console.log(employee);
+    connection.query(query, [employeeId], function(err, res) {
+    if (err) throw err; 
+    console.table(res);
+    console.log("Employee successfully removed");
+    console.log(" ");
+    start();
+    
+    })
+  })
+})
+}
+
+
+function exitApp(){
       connection.end();
   }
 

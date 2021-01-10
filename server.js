@@ -110,7 +110,7 @@ var connection = mysql.createConnection({
   }
 
   function allRoles() {
-    var query = "SELECT * FROM roles"
+    var query = "SELECT roles.title, roles.salary, department.name AS department FROM roles INNER JOIN department on roles.department_id = department.id;"
   connection.query(query, function(err, res) {
     if (err) throw err;
       console.table(res);

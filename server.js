@@ -89,8 +89,8 @@ var connection = mysql.createConnection({
           return deleteRole();
           break;
 
-        case "Delete a role":
-          return deleteRole();
+        case "Delete a department":
+          return deleteDepartment();
           break;
   
         case "Exit":
@@ -333,9 +333,9 @@ function deleteRole(){
     }
   ])
   .then(function(response) {
-    var roleChoice = response.title;
+    var roleChoice = response.name;
     // var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
-    var query = "DELETE FROM department WHERE role.title=?" 
+    var query = "DELETE FROM roles WHERE roles.title = ?;" 
 
     console.log(roleChoice);
 

@@ -101,7 +101,7 @@ var connection = mysql.createConnection({
   }
 
   function allDepartments() {
-    var query = "SELECT name FROM department"
+    var query = "SELECT * FROM department"
   connection.query(query, function(err, res) {
     if (err) throw err;
       console.table(res);
@@ -144,8 +144,11 @@ var connection = mysql.createConnection({
     }
     connection.query(query, employee, function(err, res) {
       if (err) throw err;
+        console.log("Employee added!")
+        console.log(" ");
         console.table(res);
-      start(); 
+    
+      allEmployees(); 
     })  
   })
 }
@@ -181,8 +184,10 @@ function addRole (){
   }
   connection.query(query, role, function(err, res) {
     if (err) throw err;
+      console.log("New role added!"); 
+      console.log(" "); 
       console.table(res);
-    start(); 
+    allRoles(); 
   })  
 })
 }
@@ -207,8 +212,10 @@ function addDepartment (){
   }
   connection.query(query, deptName, function(err, res) {
     if (err) throw err;
+    console.log("New department added!");
+    console.log(" ");
       console.table(res);
-    start(); 
+    allDepartments(); 
   })  
 })
 }
@@ -244,7 +251,7 @@ var query = 'SELECT * from employee'
     connection.query(query, [response.newRoleId, employeeId], function(err, res) {
     if (err) throw err; 
     console.table(res);
-    start();
+    allEmployees();
     })
   
   })
@@ -278,24 +285,89 @@ function deleteEmployee() {
     var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
     var query = "DELETE FROM employee WHERE employee.id=?" 
 
-    // var employee = {
-    //   id: employeeId
-    // }
-
-
-      // console.log(employee);
     connection.query(query, [employeeId], function(err, res) {
     if (err) throw err; 
     console.table(res);
     console.log("Employee successfully removed");
     console.log(" ");
-    start();
+    allEmployees();
     
     })
   })
 })
 }
 
+function deleteRole(){
+  var query ='SELECT * FROM roles'
+
+  connection.query(query, function(err, res) {
+    if (err) throw err;
+
+    var choices = res.map(roles => roles.title); 
+
+    inquirer
+    .prompt([
+      {
+      name:"name",
+      type: "rawlist",
+      message: "Which role would you like to remove?",
+      choices: choices
+    }
+  ])
+  .then(function(response) {
+    var roleChoice = response.title;
+    // var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
+    var query = "DELETE FROM department WHERE role.title=?" 
+
+    console.log(roleChoice);
+
+    connection.query(query, roleChoice, function(err, res) {
+    if (err) throw err; 
+    console.table(res);
+    console.log("Role successfully removed");
+    console.log(" ");
+    allRoles();
+    
+    })
+  })
+  })
+}
+
+function deleteRole(){
+  var query ='SELECT * FROM department'
+
+  connection.query(query, function(err, res) {
+    if (err) throw err;
+
+    var choices = res.map(department => department.name); 
+
+    inquirer
+    .prompt([
+      {
+      name:"name",
+      type: "rawlist",
+      message: "Which department would you like to remove?",
+      choices: choices
+    }
+  ])
+  .then(function(response) {
+    var roleChoice = response.name;
+    // var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
+    var query = "DELETE FROM department WHERE department.name=?" 
+
+    console.log(roleChoice);
+
+    connection.query(query, roleChoice, function(err, res) {
+    if (err) throw err; 
+    console.table(res);
+    console.log("Role successfully removed");
+    console.log(" ");
+    allRoles();
+    
+    })
+  })
+  })
+}
 
 function exitApp(){
       connection.end();

@@ -162,6 +162,7 @@ var connection = mysql.createConnection({
     }
     connection.query(query, employee, function(err, res) {
       if (err) throw err;
+        console.log(" ");
         console.log("Employee added!")
         console.log(" ");
         console.table(res);
@@ -202,6 +203,7 @@ function addRole (){
   }
   connection.query(query, role, function(err, res) {
     if (err) throw err;
+      console.log(" ");
       console.log("New role added!"); 
       console.log(" "); 
       console.table(res);
@@ -230,6 +232,7 @@ function addDepartment (){
   }
   connection.query(query, deptName, function(err, res) {
     if (err) throw err;
+    console.log(" ");
     console.log("New department added!");
     console.log(" ");
       console.table(res);
@@ -268,6 +271,7 @@ var query = 'SELECT * from employee'
 
     connection.query(query, [response.newRoleId, employeeId], function(err, res) {
     if (err) throw err; 
+    console.log(" ");
     console.log("Employee information has been updated!");
     console.log(" ");
     console.table(res);
@@ -308,6 +312,7 @@ function deleteEmployee() {
     connection.query(query, [employeeId], function(err, res) {
     if (err) throw err; 
     console.table(res);
+    console.log(" ");
     console.log("Employee successfully removed!");
     console.log(" ");
     allEmployees();
@@ -344,6 +349,7 @@ function deleteRole(){
     connection.query(query, roleChoice, function(err, res) {
     if (err) throw err; 
     console.table(res);
+    console.log(" ");
     console.log("Role successfully removed!");
     console.log(" ");
     allRoles();
@@ -379,9 +385,11 @@ function deleteDepartment(){
 
     connection.query(query, deptChoice, function(err, res) {
     if (err) throw err; 
-    console.table(res);
+    console.log(" ");
     console.log("Department successfully removed!");
     console.log(" ");
+    console.table(res);
+    
     allDepartments();
     
     })

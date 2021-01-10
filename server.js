@@ -27,13 +27,15 @@ var connection = mysql.createConnection({
   connection.connect(function(err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
-    console.log("Welcome to Employee Tracker..."); 
+    console.log("Welcome to the Employee Tracking App..."); 
     // run the start function after the connection is made to prompt the user
     start();
   });
 
 
   function start() {
+
+    console.log(" "); 
       inquirer
       .prompt({
         name: "actions",

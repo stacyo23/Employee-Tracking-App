@@ -39,7 +39,17 @@ var connection = mysql.createConnection({
         name: "actions",
         type: "rawlist",
         message: "What would you like to do?",
-        choices: ["View all employees", "View all roles", "View all departments", "Add an employee", "Add a role", "Add a department", "Update employee role", "Delete employee", "Exit"]
+        choices: ["View all employees", 
+                  "View all roles", 
+                  "View all departments", 
+                  "Add an employee", 
+                  "Add a role", 
+                  "Add a department", 
+                  "Update an employee's role", 
+                  "Delete an employee", 
+                  "Delete a role", 
+                  "Delete a department",
+                  "Exit"]
       })
       .then(function(answer) {
       switch (answer.actions) {
@@ -67,13 +77,21 @@ var connection = mysql.createConnection({
           return addDepartment();
           break;
   
-        case "Update employee role":
+        case "Update an employee's role":
           return updateEmployee();
           break;
 
-          case "Delete employee":
-            return deleteEmployee();
-            break;
+        case "Delete an employee":
+          return deleteEmployee();
+          break;
+
+        case "Delete a role":
+          return deleteRole();
+          break;
+
+        case "Delete a role":
+          return deleteRole();
+          break;
   
         case "Exit":
           return exitApp();
@@ -333,7 +351,7 @@ function deleteRole(){
   })
 }
 
-function deleteRole(){
+function deleteDepartment(){
   var query ='SELECT * FROM department'
 
   connection.query(query, function(err, res) {
@@ -351,18 +369,18 @@ function deleteRole(){
     }
   ])
   .then(function(response) {
-    var roleChoice = response.name;
+    var deptChoice = response.name;
     // var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
     var query = "DELETE FROM department WHERE department.name=?" 
 
-    console.log(roleChoice);
+    console.log(deptChoice);
 
-    connection.query(query, roleChoice, function(err, res) {
+    connection.query(query, deptChoice, function(err, res) {
     if (err) throw err; 
     console.table(res);
-    console.log("Role successfully removed");
+    console.log("Department successfully removed!");
     console.log(" ");
-    allRoles();
+    allDepartments();
     
     })
   })

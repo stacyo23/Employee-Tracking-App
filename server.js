@@ -121,7 +121,7 @@ var connection = mysql.createConnection({
   }
 
   function allDepartments() {
-    var query = "SELECT * FROM department"
+    var query = "SELECT name FROM department"
   connection.query(query, function(err, res) {
     if (err) throw err;
       console.table(res);
@@ -130,6 +130,7 @@ var connection = mysql.createConnection({
   }
 
   function addEmployee(){
+    console.log(" ");
     inquirer
     .prompt([
       {
@@ -167,8 +168,6 @@ var connection = mysql.createConnection({
         console.log(" ");
         console.log("Employee added!")
         console.log(" ");
-        console.table(res);
-    
       allEmployees(); 
     })  
   })
@@ -208,7 +207,6 @@ function addRole (){
       console.log(" ");
       console.log("New role added!"); 
       console.log(" "); 
-      console.table(res);
     allRoles(); 
   })  
 })
@@ -237,7 +235,6 @@ function addDepartment (){
     console.log(" ");
     console.log("New department added!");
     console.log(" ");
-      console.table(res);
     allDepartments(); 
   })  
 })
@@ -276,7 +273,6 @@ var query = 'SELECT * from employee'
     console.log(" ");
     console.log("Employee information has been updated!");
     console.log(" ");
-    console.table(res);
     allEmployees();
     })
   
@@ -313,7 +309,6 @@ function deleteEmployee() {
 
     connection.query(query, [employeeId], function(err, res) {
     if (err) throw err; 
-    console.table(res);
     console.log(" ");
     console.log("Employee successfully removed!");
     console.log(" ");
@@ -346,11 +341,8 @@ function deleteRole(){
     // var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
     var query = "DELETE FROM roles WHERE roles.title = ?;" 
 
-    console.log(roleChoice);
-
     connection.query(query, roleChoice, function(err, res) {
     if (err) throw err; 
-    console.table(res);
     console.log(" ");
     console.log("Role successfully removed!");
     console.log(" ");
@@ -383,17 +375,12 @@ function deleteDepartment(){
     // var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
     var query = "DELETE FROM department WHERE department.name=?" 
 
-    console.log(deptChoice);
-
     connection.query(query, deptChoice, function(err, res) {
     if (err) throw err; 
     console.log(" ");
     console.log("Department successfully removed!");
     console.log(" ");
-    console.table(res);
-    
     allDepartments();
-    
     })
   })
   })

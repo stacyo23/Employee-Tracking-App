@@ -174,7 +174,7 @@ var connection = mysql.createConnection({
 }
 
 function addRole (){
-
+  console.log(" ");
   inquirer
   .prompt([
     {
@@ -215,6 +215,7 @@ function addRole (){
 
 //adds departments to department database
 function addDepartment (){
+  console.log(" ");
 
   inquirer
   .prompt([
@@ -242,6 +243,8 @@ function addDepartment (){
 
 
 function updateEmployee(){
+  console.log(" ");
+
 var query = 'SELECT * from employee' 
   
   connection.query(query, function(err, res) {
@@ -286,6 +289,8 @@ var query = 'SELECT * from employee'
 
 
 function deleteEmployee() {
+  console.log(" ");
+
   var query = 'SELECT * from employee' 
   
   connection.query(query, function(err, res) {
@@ -320,6 +325,7 @@ function deleteEmployee() {
 }
 
 function deleteRole(){
+  console.log(" ");
   var query ='SELECT * FROM roles'
 
   connection.query(query, function(err, res) {
@@ -354,6 +360,8 @@ function deleteRole(){
 }
 
 function deleteDepartment(){
+  console.log(" ");
+
   var query ='SELECT * FROM department'
 
   connection.query(query, function(err, res) {
@@ -372,7 +380,6 @@ function deleteDepartment(){
   ])
   .then(function(response) {
     var deptChoice = response.name;
-    // var employeeId = employeeChoiceArr[employeeChoiceArr.length-1];
     var query = "DELETE FROM department WHERE department.name=?" 
 
     connection.query(query, deptChoice, function(err, res) {

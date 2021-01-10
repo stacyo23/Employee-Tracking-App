@@ -6,10 +6,10 @@ The application uses a command-line interface to add, view, update, and delete e
 
 ## Installation
 
-The application will require the installation of the following: mysql, inquirer, console.table
+The application will require the installation of the following: mysql, inquirer, console.table.
 
 ## Demonstration
-![Demonstration](NTA.gif)
+![Demonstration](ETA.gif)
 
  ## Contact
   Please feel free to contact me at stacyo23@yahoo.com for questions or feedback. 
